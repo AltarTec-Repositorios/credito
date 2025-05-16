@@ -1,0 +1,53 @@
+
+# Compilados do Java
+*.class
+
+# Diretórios do build
+/target/
+/build/
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# Sistema operacional
+Thumbs.db
+.DS_Store
+
+# Arquivos do Maven
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos do Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Arquivo de propriedades gerados
+*.properties~
+*.yml~
+*.env
+
+# Arquivos de testes
+/test-output/
