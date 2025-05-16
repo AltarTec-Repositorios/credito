@@ -1,17 +1,51 @@
 package br.com.credito.controller;
 
+import br.com.credito.dto.CreditoDTO;
+import br.com.credito.exception.EntidadeNaoEncontradaException;
+import br.com.credito.service.CreditoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/credito")
 public class ConsultaController {
 
+    @Autowired
+    // Injetando o serviço de crédito
+    private CreditoService creditoService;
+
+    /**
+     * Endpoint de teste para verificar a geração da documentação.
+     *
+     * @return Mensagem de teste
+     */
     @GetMapping("/teste-doc")
     public ResponseEntity<String> getMessage() {
         return new ResponseEntity<>("Este endpoint é de teste para verificar geração da documentação -> Swagger e OpenAPI", HttpStatus.OK);
     }
+    /**
+     * Endpoint para consultar créditos por número da NFS-e.
+     *
+     * @param numeroNfse Número da NFS-e
+     * @return Lista de créditos encontrados
+     */
+    @GetMapping("/{numeroNfse}")
+    public List<CreditoDTO> getCreditosByNfse(@PathVariable String numeroNfse) {
+        List<CreditoDTO> creditos = creditoService.getCreditosByNfse(numeroNfse);
+
+        // Se não encontrar créditos, lança a exceção
+        if (creditos.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Nenhum crédito encontrado para o número da NFS-e: " + numeroNfse);
+        }
+
+        return creditos;
+    }
+
 }
