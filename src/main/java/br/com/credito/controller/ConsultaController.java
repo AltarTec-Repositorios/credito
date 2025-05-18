@@ -20,16 +20,6 @@ public class ConsultaController {
     @Autowired
     // Injetando o serviço de crédito
     private CreditoService creditoService;
-
-    /**
-     * Endpoint de teste para verificar a geração da documentação.
-     *
-     * @return Mensagem de teste
-     */
-    @GetMapping("/teste-doc")
-    public ResponseEntity<String> getMessage() {
-        return new ResponseEntity<>("Este endpoint é de teste para verificar geração da documentação -> Swagger e OpenAPI", HttpStatus.OK);
-    }
     /**
      * Endpoint para consultar créditos por número da NFS-e.
      *

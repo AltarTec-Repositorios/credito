@@ -30,4 +30,7 @@ public class Credito {
     private BigDecimal valorFaturado;
     private BigDecimal valorDeducao;
     private BigDecimal baseCalculo;
+
+    public Credito(long l, String number, String number1, LocalDate now, BigDecimal ten) {
+    }
 }
