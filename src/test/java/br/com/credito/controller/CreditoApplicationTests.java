@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +35,7 @@ class ConsultaControllerTest {
     class GetCreditosByNfse {
 
         @Test
-        @DisplayName("Returns list of CreditoDTO when found")
-        void returnsListOfCreditoDTOWhenFound() {
+        void returnsListCreditoDTO() {
             String numeroNfse = "12345";
             List<CreditoDTO> mockCreditos = List.of(new CreditoDTO());
             when(creditoService.getCreditosByNfse(numeroNfse)).thenReturn(mockCreditos);
@@ -50,8 +48,7 @@ class ConsultaControllerTest {
         }
 
         @Test
-        @DisplayName("Throws EntidadeNaoEncontradaException when no credits found")
-        void throwsEntidadeNaoEncontradaExceptionWhenNoCreditsFound() {
+        void throwsEntidadeNaoEncontradaExceptionNFSE() {
             String numeroNfse = "12345";
             when(creditoService.getCreditosByNfse(numeroNfse)).thenReturn(Collections.emptyList());
 
@@ -64,4 +61,36 @@ class ConsultaControllerTest {
             verify(creditoService, times(1)).getCreditosByNfse(numeroNfse);
         }
     }
+
+    @Nested
+    @DisplayName("getCreditosByCredito")
+    class GetCreditosByCredito {
+
+        @Test
+        void returnCreditoDTO() {
+            String numeroCredito = "12345";
+            CreditoDTO mockCredito = new CreditoDTO();
+            when(creditoService.getCreditoByNumeroCredito(numeroCredito)).thenReturn(mockCredito);
+
+            CreditoDTO result = consultaController.getCreditoByNumeroCredito(numeroCredito).getBody();
+
+            assertNotNull(result);
+            verify(creditoService, times(1)).getCreditoByNumeroCredito(numeroCredito);
+        }
+
+        @Test
+        void throwsEntidadeNaoEncontradaExceptionCredito() {
+            String numeroCredito = "12345";
+            when(creditoService.getCreditoByNumeroCredito(numeroCredito)).thenReturn(null);
+
+            EntidadeNaoEncontradaException exception = assertThrows(
+                    EntidadeNaoEncontradaException.class,
+                    () -> consultaController.getCreditoByNumeroCredito(numeroCredito)
+            );
+
+            assertEquals("Crédito não encontrado para o número: " + numeroCredito, exception.getMessage());
+            verify(creditoService, times(1)).getCreditoByNumeroCredito(numeroCredito);
+        }
+    }
+
 }

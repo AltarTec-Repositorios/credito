@@ -37,7 +37,6 @@ class CreditoServiceTest {
     }
 
     @Nested
-    @DisplayName("getCreditosByNfse")
     class GetCreditosByNfse {
 
         @Test
@@ -70,4 +69,37 @@ class CreditoServiceTest {
             verifyNoInteractions(modelMapper);
         }
     }
+
+    @Nested
+    class getCreditoByNumeroCredito {
+
+        @Test
+        void returnCreditoDTO() {
+            String numeroCredito = "12345";
+            Credito credito = new Credito(1L, "123", "12345", LocalDate.now(), BigDecimal.TEN);
+            CreditoDTO creditoDTO = new CreditoDTO();
+            when(creditoRepository.findCreditoByNumeroCredito(numeroCredito)).thenReturn(credito);
+            when(modelMapper.map(credito, CreditoDTO.class)).thenReturn(creditoDTO);
+
+            CreditoDTO result = creditoService.getCreditoByNumeroCredito(numeroCredito);
+
+            assertNotNull(result);
+            verify(creditoRepository, times(1)).findCreditoByNumeroCredito(numeroCredito);
+            verify(modelMapper, times(1)).map(credito, CreditoDTO.class);
+        }
+
+        @Test
+        void returnEmptyDTO() {
+            String numeroCredito = "12345";
+            when(creditoRepository.findCreditoByNumeroCredito(numeroCredito)).thenReturn(null);
+
+            CreditoDTO result = creditoService.getCreditoByNumeroCredito(numeroCredito);
+
+            assertNull(result);
+
+            verify(creditoRepository, times(1)).findCreditoByNumeroCredito(numeroCredito);
+            verifyNoInteractions(modelMapper);
+        }
+    }
+
 }

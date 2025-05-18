@@ -22,7 +22,7 @@ class CreditoServiceIntegrationTest {
 
     @Test
     @Sql(scripts = "/insert-creditos.sql") // Script para inserir dados de teste
-    void returnsListOfCreditoDTOWhenCreditsExistInDatabase() {
+    void returnsListCreditoDTOInDatabase() {
         String numeroNfse = "101011";
 
         List<CreditoDTO> result = creditoService.getCreditosByNfse(numeroNfse);
@@ -34,7 +34,7 @@ class CreditoServiceIntegrationTest {
     }
 
     @Test
-    void returnsEmptyListWhenNoCreditsExistInDatabase() {
+    void returnsEmptyListCreditsInDatabase() {
         String numeroNfse = "99999";
 
         List<CreditoDTO> result = creditoService.getCreditosByNfse(numeroNfse);
@@ -42,4 +42,15 @@ class CreditoServiceIntegrationTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    @Sql(scripts = "/insert-creditos.sql") // Script para inserir dados de teste
+    void returnCreditoDTOInDatabase() {
+        String numeroCredito = "5550001";
+
+        CreditoDTO result = creditoService.getCreditoByNumeroCredito(numeroCredito);
+        assertNotNull(result);
+
+    }
+
 }
