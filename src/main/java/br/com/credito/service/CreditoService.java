@@ -25,6 +25,11 @@ public class CreditoService {
     }
 
     private CreditoDTO toDTO(Credito credito) {
-        return modelMapper.map(credito, CreditoDTO.class);
+            return credito != null ? modelMapper.map(credito, CreditoDTO.class) : null;
+        }
+
+    public CreditoDTO getCreditoByNumeroCredito(String numeroCredito) {
+        Credito credito = creditoRepository.findCreditoByNumeroCredito(numeroCredito);
+        return toDTO(credito);
     }
 }

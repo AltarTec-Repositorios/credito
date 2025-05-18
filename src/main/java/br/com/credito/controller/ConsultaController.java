@@ -38,4 +38,22 @@ public class ConsultaController {
         return creditos;
     }
 
+    /**
+     * Endpoint para consultar crédito por número do crédito.
+     *
+     * @param numeroCredito Número do crédito
+     * @return Detalhes do crédito encontrado
+     */
+    @GetMapping("/credito/{numeroCredito}")
+    public ResponseEntity<CreditoDTO> getCreditoByNumeroCredito(@PathVariable String numeroCredito) {
+        CreditoDTO credito = creditoService.getCreditoByNumeroCredito(numeroCredito);
+
+        // Se não encontrar o crédito, lança a exceção
+        if (credito == null) {
+            throw new EntidadeNaoEncontradaException("Crédito não encontrado para o número: " + numeroCredito);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(credito);
+    }
+
 }
