@@ -12,7 +12,7 @@
 
     <groupId>br.com.credito</groupId>
     <artifactId>credito</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Credito</name>
     <description>Projeto de crédito</description>
 

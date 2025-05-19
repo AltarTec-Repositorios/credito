@@ -22,7 +22,15 @@ e documentação.
 
 ### Executando localmente
 
+-(Local)
 mvn spring-boot:run
+
+-(Docker)
+*Build
+docker build -t credito-1.0.0:latest .
+
+*Run
+docker run -d -p 8080:8080 --name credito-1.0.0 credito-1.0.0:latest
 
 
 A aplicação será disponibilizada por padrão em `http://localhost:8080/api/credito`.
